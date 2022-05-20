@@ -21,23 +21,21 @@ package com.jaca;
 
 import java.util.*;
 class LogParser {
-    public static Collection<Long> getTimestampsByDescription(String xml, String description) throws Exception {
+    public static Collection<Long> getTimestampsByDescription(String xml, String description) {
         List<String> lines = new ArrayList<>();
         List<Long> longsCollection = new ArrayList<>();
 
         Scanner scanner = new Scanner(xml);
         while (scanner.hasNextLine()) {
-            String line = scanner.nextLine();
-            lines.add(line);
+            lines.add(scanner.nextLine());
         }
         scanner.close();
 
         for (int i = 0; i < lines.size(); i++) {
             if (lines.get(i).contains(description)){
-                ArrayList<String> partsOfString = new ArrayList<>(Arrays.asList(lines.get(i - 1).split("\"")));
                 for (String string :
-                        partsOfString) {
-                    if (isANumber(string)) longsCollection.add(Long.parseLong(string));;
+                        lines.get(i - 1).split("\"")) {
+                    if (isANumber(string)) longsCollection.add(Long.parseLong(string));
                 }
             }
         }
