@@ -21,7 +21,7 @@ package com.jaca;
 
 import java.util.*;
 class LogParser {
-    public static Collection<Long> getTimestampsByDescription(String xml, String description) {
+    public static Collection<Long> getTimestampsByDescription(String xml, String description) throws Exception {
         List<String> lines = new ArrayList<>();
         List<Long> longsCollection = new ArrayList<>();
 
@@ -33,12 +33,12 @@ class LogParser {
 
         for (int i = 0; i < lines.size(); i++) {
             if (lines.get(i).contains(description)){
-                for (String string :
-                        lines.get(i - 1).split("\"")) {
+                for (String string : lines.get(i - 1).split("\"")) {
                     if (isANumber(string)) longsCollection.add(Long.parseLong(string));
                 }
             }
         }
+        if (longsCollection.isEmpty()) throw new Exception("No event containing description \"" + description + "\"");
         return longsCollection;
     }
 
